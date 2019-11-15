@@ -1,0 +1,32 @@
+{% extends 'home.html' %}
+
+{% block Search%}
+{% endblock Search%}
+{% block movie %}
+        <!-- Blog Post -->
+<!--        {% if movie  != 'None' %}-->
+        <div class="card mb-4">
+          <div style="display: flex; flex-direction: row;">
+            <img src="/media/{{movie.image}}" width="180" height="250" alt="Card image cap">
+            <div class="card-body">
+                <h2 class="card-title">{{movie.movie_name}}</h2>
+                <p class="card-text">{{movie.plot}}</p>
+                <p class="card-text">Жанр:  <a href="{% url 'detail_category' slug=movie.category.slug %}">{{movie.category}}</a></p>
+                <p class="card-text">Ссылка: <a href="{{movie.link_movie}}">{{movie.link_movie}}</a></p>
+            </div>
+          </div>
+          <div class="card-footer text-muted">
+            <p class="card-text">{{movie.created_date}}</p>
+          </div>
+        </div>
+<!--        {% endif %}-->
+{% endblock movie %}
+
+{% block paginat %}
+{% endblock paginat %}
+
+{% block Sorting%}
+{% endblock Sorting%}
+
+{% block Categories %}
+{% endblock Categories %}

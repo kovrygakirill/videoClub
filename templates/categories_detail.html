@@ -1,0 +1,27 @@
+{% extends 'home.html' %}
+
+{% block movie %}
+{% for movie in movies %}
+<!-- Blog Post -->
+<div class="card mb-4">
+    <div style="display: flex; flex-direction: row;">
+        <img src="/media/{{movie.image}}" width="180" height="250" alt="Card image cap">
+        <div class="card-body">
+            <h2 class="card-title">{{movie.movie_name}}</h2>
+            <p class="card-text">{{movie.plot}}</p>
+            <a href="{% url 'detail_movies' pk=movie.pk %}" class="btn btn-primary">Read More →</a>
+        </div>
+    </div>
+    <div class="card-footer text-muted">
+            <p class="card-text">{{movie.created_date}}</p>
+    </div>
+</div>
+{% endfor %}
+{% endblock movie %}
+
+{% block Search%}
+{% endblock Search%}
+
+
+{% block Categories %}
+{% endblock Categories %}
