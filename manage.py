@@ -2,8 +2,17 @@
 import os
 import sys
 
+
+# from django.conf import settings
+
+# settings.configure()
+
 if __name__ == '__main__':
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'videoClub.settings')
+    # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'videoClub.settings')
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'videoClub.settings'
+    # os.environ['DJANGO_SETTINGS_MODULE'] = 'videoClub.settings'
+    # settings.configure()
+    # DJANGO_SETTINGS_MODULE = 'videoClub.settings'
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

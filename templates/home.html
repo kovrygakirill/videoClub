@@ -31,14 +31,14 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'random_movie' %}">Random Movie</a>
+          </li>
           <li class="nav-item active">
             <a class="nav-link" href="{% url 'post_Home' %}">Home
               <span class="sr-only">(current)</span>
             </a>
           </li>
-<!--          <li class="nav-item">-->
-<!--            <a class="nav-link" href="#">About</a>-->
-<!--          </li>-->
 <!--          <li class="nav-item">-->
 <!--            <a class="nav-link" href="#">Services</a>-->
 <!--          </li>-->
@@ -59,7 +59,7 @@
       <div class="col-md-8">
 
         <h1 class="my-4">HD Movies
-          <small>Secondary Text</small>
+          <small>Watch new movies every day</small>
         </h1>
 
         {% block movie %}
@@ -152,7 +152,10 @@
           <div class="card-body">
             <ul class="list-unstyled mb-0">
               <li>
-                <a href='#'>lphabet</a>
+                <a href="{%url 'post_Home' %}?sort=Alphabet">Alphabet</a>
+              </li>
+              <li>
+                <a href="{%url 'post_Home' %}?sort=Date">Date</a>
               </li>
             </ul>
           </div>

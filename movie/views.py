@@ -1,44 +1,82 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 
 # from django.views.generic import TemplateView
 # from django.views.generic.list import ListView
 # from .models import Category, Movie
 # from django.views.generic.detail import DetailView
 # from urllib import request
-from .models import Category, Movie
+# from videoClub.movie.models import Category, Movie
+# from .models import Category, Movie
 from .queries.movie_query import MovieQuery
+from .models import Category, Movie
 
 
+# import pdb; pdb.set_trace()
 # import pdb; pdb.set_trace()
 
 
 def post_Home(request):
-    movies = MovieQuery.result(request.GET.get('movies', ''))
-    categories = Category.object.all()
+    # templates = 'home.html'
+    #
+    # if request.GET.get('movies'):
+    #     movies = MovieQuery.filterMovies(request.GET.get('movies'))
+    # elif request.GET.get('sort'):
+    #     movies = MovieQuery.sortMovie(request.GET.get('sort'))
+    # else:
+    #     movies = MovieQuery.sortMovie(request.GET.get('/', ''))
+    #
+    # if movies:
+    #     categories = Category.object.all()
+    #     return render(request, templates, {'movies': movies, 'categories': categories})
+    # else:
+    #     templates = 'error_404.html'
+    #     return render(request, templates)
 
-    return render(request, 'home.html', {'movies': movies, 'categories': categories})
+    params = {'movies': request.GET.get('movies'), 'sort': request.GET.get('sort')}
+    # path = request.get_full_path
+    movies = MovieQuery.filterCategories_detail(params)
+    categories = Category.object.all()
+    return render(request, 'home.html', {'movies': movies, 'categories': categories, })
 
 
 def detail_movies(request, pk):
+    # movie = get_object_or_404(Movie, pk=pk)
+    # return render(request, 'movie.html', {'movie': movie})
     if Movie.object.filter(pk=pk).exists():
         movie = Movie.object.get(pk=pk)
         return render(request, 'movie.html', {'movie': movie})
     else:
+        # movie = None
         return render(request, 'error_404.html')
+    #
+    # # return render(request, 'movie.html', {'movie': movie})
 
 
 def detail_category(request, slug):
-    category = Category.object.get(slug=slug)
+    # category = Category.object.get(slug=slug)
+    #
+    # if Movie.object.filter(category=category).exists():
+    #     movies = Movie.object.filter(category=category).order_by("-created_date")
+    # else:
+    #     movies = None
 
-    if Movie.object.filter(category=category).exists():
-        movies = Movie.object.filter(category=category).order_by("-created_date")
+    # return render(request, 'error_404.html')
+    if Category.object.filter(slug=slug).exists():
+        params = {'slug': slug, 'movies': request.GET.get('movies'), 'sort': request.GET.get('sort')}
+        category = Category.object.get(slug=slug)
+        movies = MovieQuery.filterCategories_detail(params)
+        return render(request, "categories_detail.html", {'movies': movies, 'category': category})
     else:
-        movies = None
-
-    return render(request, "categories_detail.html", {'movies': movies})
+        return render(request, "404.html")
 
 
-def error_404(request, exception):
+def random_movie(request):
+    movie = Movie.object.order_by("?").first()
+    # return render(request, "movie.html", {'movie': movie})
+    return redirect(movie,{"movie":movie})
+
+
+def error_404(request):
     return render(request, 'error_404.html')
 
 # class HomeMoviesView(TemplateView):  # why ListView?
