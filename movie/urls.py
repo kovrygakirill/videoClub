@@ -13,5 +13,5 @@ urlpatterns = [
     url(r'^movies/(?P<pk>\d+)/$', detail_movies, name="detail_movies"),
     url(r'^random_movie/$', random_movie, name="random_movie"),
     # url(r'^sort/$', detail_movies, name="detail_movies"),
-    url(r'^(?!media).*$', error_404, name="error_404")
+    url(r'^(?!media).*$', error_404, name="404")
 ]

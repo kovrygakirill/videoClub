@@ -47,7 +47,7 @@ def detail_movies(request, pk):
         return render(request, 'movie.html', {'movie': movie})
     else:
         # movie = None
-        return render(request, 'error_404.html')
+        return render(request, '404.html')
     #
     # # return render(request, 'movie.html', {'movie': movie})
 
@@ -72,12 +72,12 @@ def detail_category(request, slug):
 
 def random_movie(request):
     movie = Movie.object.order_by("?").first()
-    # return render(request, "movie.html", {'movie': movie})
-    return redirect(movie,{"movie":movie})
+    return render(request, "movie.html", {'movie': movie})
+    # return redirect(movie,{"movie":movie})
 
 
 def error_404(request):
-    return render(request, 'error_404.html')
+    return render(request, '404.html')
 
 # class HomeMoviesView(TemplateView):  # why ListView?
 #     template_name = 'home.html'
