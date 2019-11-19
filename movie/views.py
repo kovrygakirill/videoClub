@@ -32,22 +32,25 @@ def post_Home(request):
     #     templates = 'error_404.html'
     #     return render(request, templates)
 
-    params = {'movies': request.GET.get('movies'), 'sort': request.GET.get('sort')}
+    params = {'search': request.GET.get('search'), 'sort': request.GET.get('sort')}
     # path = request.get_full_path
-    movies = MovieQuery.filterCategories_detail(params)
-    categories = Category.object.all()
-    return render(request, 'home.html', {'movies': movies, 'categories': categories, })
+    movies = MovieQuery.filterRequest(params)
+    if movies:
+        categories = Category.object.all()
+        return render(request, 'home.html', {'movies': movies, 'categories': categories, })
+    else:
+        return render(request, 'request_not_found.html')
 
 
 def detail_movies(request, pk):
     # movie = get_object_or_404(Movie, pk=pk)
-    # return render(request, 'movie.html', {'movie': movie})
-    if Movie.object.filter(pk=pk).exists():
-        movie = Movie.object.get(pk=pk)
+    # return render(request, 'movie.html', {'movie': movie}x`x)
+    params = {'pk': pk}
+    movie = MovieQuery.filterRequest(params)
+    if movie:
         return render(request, 'movie.html', {'movie': movie})
     else:
-        # movie = None
-        return render(request, '404.html')
+        return render(request, 'request_not_found.html')
     #
     # # return render(request, 'movie.html', {'movie': movie})
 
@@ -61,18 +64,22 @@ def detail_category(request, slug):
     #     movies = None
 
     # return render(request, 'error_404.html')
-    if Category.object.filter(slug=slug).exists():
-        params = {'slug': slug, 'movies': request.GET.get('movies'), 'sort': request.GET.get('sort')}
-        category = Category.object.get(slug=slug)
-        movies = MovieQuery.filterCategories_detail(params)
-        return render(request, "categories_detail.html", {'movies': movies, 'category': category})
+    # if Category.object.filter(slug=slug).exists():
+    params = {'slug': slug, 'search': request.GET.get('search'), 'sort': request.GET.get('sort')}
+    # category = Category.object.filter(slug=slug)
+    movies = MovieQuery.filterRequest(params)
+    if movies:
+        return render(request, "categories_detail.html", {'movies': movies, 'slug': slug})
     else:
-        return render(request, "404.html")
+        return render(request,  'request_not_found.html')
 
 
 def random_movie(request):
     movie = Movie.object.order_by("?").first()
     return render(request, "movie.html", {'movie': movie})
+    # pk = str(movie.pk) + '/'
+    # response = redirect('/movie/' + pk, {'movie': movie})
+    # return response
     # return redirect(movie,{"movie":movie})
 
 
