@@ -1,5 +1,8 @@
 {% extends 'home.html' %}
 
+{% block Search%}
+{% endblock Search%}
+
 {% block movie %}
 {% for movie in movies %}
 <!-- Blog Post -->
@@ -19,8 +22,8 @@
 {% endfor %}
 {% endblock movie %}
 
-{% block Search%}
-{% endblock Search%}
+{% block paginat %}
+{% endblock paginat %}
 
 {% block Sorting %}
 <div class="card my-4">
@@ -28,10 +31,10 @@
       <div class="card-body">
         <ul class="list-unstyled mb-0">
           <li>
-            <a href="{% url 'detail_category' slug=category.slug %}?sort=Alphabet">Alphabet</a>
+            <a href="{% url 'detail_category' slug=slug %}?sort=Alphabet">Alphabet</a>
           </li>
           <li>
-            <a href="{%url 'detail_category' slug=category.slug %}?sort=Date">Date</a>
+            <a href="{%url 'detail_category' slug=slug %}?sort=Date">Date</a>
           </li>
         </ul>
       </div>
