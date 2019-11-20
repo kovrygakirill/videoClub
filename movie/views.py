@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 # from urllib import request
 # from videoClub.movie.models import Category, Movie
 # from .models import Category, Movie
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .queries.movie_query import MovieQuery
 from .models import Category, Movie
 
@@ -34,9 +35,11 @@ def post_Home(request):
 
     params = {'search': request.GET.get('search'), 'sort': request.GET.get('sort')}
     # path = request.get_full_path
-    movies = MovieQuery.filterRequest(params)
-    if movies:
-        categories = Category.object.all()
+    movie_list = MovieQuery.filterRequest(params)
+    categories = Category.object.all()
+
+    if movie_list:
+        movies = MovieQuery.getPaginator(movie_list, request.GET.get("page"))
         return render(request, 'home.html', {'movies': movies, 'categories': categories, })
     else:
         return render(request, 'request_not_found.html')
@@ -67,11 +70,12 @@ def detail_category(request, slug):
     # if Category.object.filter(slug=slug).exists():
     params = {'slug': slug, 'search': request.GET.get('search'), 'sort': request.GET.get('sort')}
     # category = Category.object.filter(slug=slug)
-    movies = MovieQuery.filterRequest(params)
-    if movies:
+    movie_list = MovieQuery.filterRequest(params)
+    if movie_list:
+        movies = MovieQuery.getPaginator(movie_list, request.GET.get("page"))
         return render(request, "categories_detail.html", {'movies': movies, 'slug': slug})
     else:
-        return render(request,  'request_not_found.html')
+        return render(request, 'request_not_found.html')
 
 
 def random_movie(request):
