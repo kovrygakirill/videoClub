@@ -50,7 +50,7 @@ class MovieQuery:
 
     @staticmethod
     def getPaginator(movie_list, page):
-        show_movies_page = 3
+        show_movies_page = 6
         paginator = Paginator(movie_list, show_movies_page)
 
         try:
