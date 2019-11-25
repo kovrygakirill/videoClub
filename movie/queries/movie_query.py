@@ -7,14 +7,15 @@ class MovieQuery:
     def filterRequest(params):
         result = Movie.object.order_by("-created_date")
 
-        if params.get("sort"):
-            result = MovieQuery.sortMovie(result, params['sort'])
-        if params.get("search"):
-            result = MovieQuery.searchMovies(result, params['search'])
-        if params.get("pk"):
-            result = MovieQuery.pkMovie(result, params['pk'])
-        if params.get("slug"):
-            result = MovieQuery.slugMovie(result, params['slug'])
+        if params:
+            if params.get("sort"):
+                result = MovieQuery.sortMovie(result, params['sort'])
+            if params.get("search"):
+                result = MovieQuery.searchMovies(result, params['search'])
+            if params.get("pk"):
+                result = MovieQuery.pkMovie(result, params['pk'])
+            if params.get("slug"):
+                result = MovieQuery.slugMovie(result, params['slug'])
 
         return result
 
