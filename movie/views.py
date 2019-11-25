@@ -34,7 +34,9 @@ def post_Home(request):
     #     return render(request, templates)
 
     params = {'search': request.GET.get('search'), 'sort': request.GET.get('sort')}
-    # path = request.get_full_path
+    # path = request.GET.urlencode('sort')
+    # if path:
+    #     path += "&"
     movie_list = MovieQuery.filterRequest(params)
     categories = Category.object.all()
 
@@ -80,11 +82,12 @@ def detail_category(request, slug):
 
 def random_movie(request):
     movie = Movie.object.order_by("?").first()
-    return render(request, "movie.html", {'movie': movie})
+    path = "/movies/"+str(movie.pk)+"/"
+    # return render(request, "movie.html", {'movie': movie})
     # pk = str(movie.pk) + '/'
     # response = redirect('/movie/' + pk, {'movie': movie})
     # return response
-    # return redirect(movie,{"movie":movie})
+    return redirect(path)
 
 
 def error_404(request):
