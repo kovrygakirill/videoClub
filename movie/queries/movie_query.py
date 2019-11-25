@@ -20,29 +20,35 @@ class MovieQuery:
 
     @staticmethod
     def sortMovie(scope, sort):
-        if sort == 'Alphabet':
-            result = scope.order_by("movie_name")
-        elif sort == 'Date':
-            result = scope.order_by("-created_date")
-        else:
-            result = scope
+        if scope:
+            if sort == 'Alphabet':
+                result = scope.order_by("movie_name")
+            elif sort == 'Date':
+                result = scope.order_by("-created_date")
+            else:
+                result = scope
 
-        return result
+            return result
+        else:
+            return []
 
     @staticmethod
     def searchMovies(scope, search):
-        return scope.filter(movie_name=search)
+        if scope:
+            return scope.filter(movie_name=search)
+        else:
+            return []
 
     @staticmethod
     def pkMovie(scope, pk):
-        if Movie.object.filter(pk=pk).exists():
+        if Movie.object.filter(pk=pk).exists() and scope:
             return scope.get(pk=pk)
         else:
             return []
 
     @staticmethod
     def slugMovie(scope, slug):
-        if Category.object.filter(slug=slug).exists():
+        if Category.object.filter(slug=slug).exists() and scope:
             category = Category.object.get(slug=slug)
             return scope.filter(category=category)
         else:
