@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+import re
 
 # from django.views.generic import TemplateView
 # from django.views.generic.list import ListView
@@ -33,16 +34,17 @@ def post_Home(request):
     #     templates = 'error_404.html'
     #     return render(request, templates)
 
-    params = {'search': request.GET.get('search'), 'sort': request.GET.get('sort')}
-    # path = request.GET.urlencode('sort')
+    params = {'search': request.GET.get('search'), 'sort': request.GET.get('sort'),
+              'page': request.GET.get("page", ' '), }
+    path = MovieQuery.sumQuery(request.GET.urlencode())
+    # path = re.sub(r'page=\d+', '', params_as_string)
     # if path:
     #     path += "&"
-    movie_list = MovieQuery.filterRequest(params)
+    movies = MovieQuery.filterRequest(params)
     categories = Category.object.all()
 
-    if movie_list:
-        movies = MovieQuery.getPaginator(movie_list, request.GET.get("page"))
-        return render(request, 'home.html', {'movies': movies, 'categories': categories, })
+    if movies:
+        return render(request, 'home.html', {'movies': movies, 'categories': categories, 'path': path})
     else:
         return render(request, 'request_not_found.html')
 
@@ -52,6 +54,7 @@ def detail_movies(request, pk):
     # return render(request, 'movie.html', {'movie': movie}x`x)
     params = {'pk': pk}
     movie = MovieQuery.filterRequest(params)
+
     if movie:
         return render(request, 'movie.html', {'movie': movie})
     else:
@@ -70,19 +73,20 @@ def detail_category(request, slug):
 
     # return render(request, 'error_404.html')
     # if Category.object.filter(slug=slug).exists():
-    params = {'slug': slug, 'search': request.GET.get('search'), 'sort': request.GET.get('sort')}
-    # category = Category.object.filter(slug=slug)
-    movie_list = MovieQuery.filterRequest(params)
-    if movie_list:
-        movies = MovieQuery.getPaginator(movie_list, request.GET.get("page"))
-        return render(request, "categories_detail.html", {'movies': movies, 'slug': slug})
+    params = {'slug': slug, 'search': request.GET.get('search'), 'sort': request.GET.get('sort'),
+              'page': request.GET.get("page", ' '), }
+    path = MovieQuery.sumQuery(request.GET.urlencode())
+    movies = MovieQuery.filterRequest(params)
+
+    if movies:
+        return render(request, "categories_detail.html", {'movies': movies, 'slug': slug, 'path': path})
     else:
         return render(request, 'request_not_found.html')
 
 
 def random_movie(request):
     movie = Movie.object.order_by("?").first()
-    path = "/movies/"+str(movie.pk)+"/"
+    path = "/movies/" + str(movie.pk) + "/"
     # return render(request, "movie.html", {'movie': movie})
     # pk = str(movie.pk) + '/'
     # response = redirect('/movie/' + pk, {'movie': movie})

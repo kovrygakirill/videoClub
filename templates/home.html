@@ -106,8 +106,8 @@
             <div class="pagination">
                 <span class="step-links">
                     {% if movies.has_previous %}
-                        <a href="?page=1">&laquo; first</a>
-                        <a href="?page={{ movies.previous_page_number }}">previous</a>
+                        <a href="?{{ path }}page=1">&laquo; first</a>
+                        <a href="?{{ path }}page={{ movies.previous_page_number }}">previous</a>
                     {% endif %}
 
                     <span class="current">
@@ -115,8 +115,8 @@
                     </span>
 
                     {% if movies.has_next %}
-                        <a href="?page={{ movies.next_page_number }}">next</a>
-                        <a href="?page={{ movies.paginator.num_pages }}">last &raquo;</a>
+                        <a href="?{{ path }}page={{ movies.next_page_number }}">next</a>
+                        <a href="?{{ path }}page={{ movies.paginator.num_pages }}">last &raquo;</a>
                     {% endif %}
                  </span>
             </div>
