@@ -34,10 +34,14 @@ class MovieQuery:
 
     @staticmethod
     def searchMovies(scope, search):
-        if scope:
-            return scope.filter(movie_name__iregex=search)
-        else:
-            return []
+        try:
+            result = scope.filter(movie_name__iregex=search)
+        except ValueError:
+            result = []
+        except AttributeError:
+            result = []
+
+        return result
 
     @staticmethod
     def pkMovie(scope, pk):
