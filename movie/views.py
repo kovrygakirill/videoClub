@@ -1,5 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
-import re
+from django.shortcuts import render, redirect
 
 # from django.views.generic import TemplateView
 # from django.views.generic.list import ListView
@@ -11,6 +10,8 @@ import re
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .queries.movie_query import MovieQuery
 from .models import Category, Movie
+from .queries.pagination import Paginat
+from .queries.path_request import PathRequest
 
 
 # import pdb; pdb.set_trace()
@@ -34,16 +35,14 @@ def post_Home(request):
     #     templates = 'error_404.html'
     #     return render(request, templates)
 
-    params = {'search': request.GET.get('search'), 'sort': request.GET.get('sort'),
-              'page': request.GET.get("page", ' '), }
-    path = MovieQuery.sumQuery(request.GET.urlencode())
+    params = {'search': request.GET.get('search'), 'sort': request.GET.get('sort'), }
     # path = re.sub(r'page=\d+', '', params_as_string)
-    # if path:
-    #     path += "&"
-    movies = MovieQuery.filterRequest(params)
+    movies_list = MovieQuery.filterRequest(params)
     categories = Category.object.all()
 
-    if movies:
+    if movies_list:
+        movies = Paginat.getPaginator(movies_list, request.GET.get('page', ' '))
+        path = PathRequest.sumQuery(request.GET.urlencode())
         return render(request, 'home.html', {'movies': movies, 'categories': categories, 'path': path})
     else:
         return render(request, 'request_not_found.html')
@@ -75,10 +74,11 @@ def detail_category(request, slug):
     # if Category.object.filter(slug=slug).exists():
     params = {'slug': slug, 'search': request.GET.get('search'), 'sort': request.GET.get('sort'),
               'page': request.GET.get("page", ' '), }
-    path = MovieQuery.sumQuery(request.GET.urlencode())
-    movies = MovieQuery.filterRequest(params)
+    movies_list = MovieQuery.filterRequest(params)
 
-    if movies:
+    if movies_list:
+        path = PathRequest.sumQuery(request.GET.urlencode())
+        movies = Paginat.getPaginator(movies_list, request.GET.get('page', ' '))
         return render(request, "categories_detail.html", {'movies': movies, 'slug': slug, 'path': path})
     else:
         return render(request, 'request_not_found.html')
