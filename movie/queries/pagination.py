@@ -16,3 +16,5 @@ class Paginat:
                 movies = paginator.page(paginator.num_pages)
 
             return movies
+        else:
+            return None
