@@ -10,7 +10,8 @@ class PathRequest:
             if query_as_dict.get('page'):
                 del query_as_dict['page']
             query_as_string = urlencode(query_as_dict)
-            query_as_string += "&"
+            if query_as_string:
+                query_as_string += "&"
 
             return query_as_string
         else:
