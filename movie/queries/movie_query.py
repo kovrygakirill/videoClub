@@ -1,7 +1,4 @@
 from ..models import Movie, Category
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from urllib.parse import urlencode
-from django.http.request import QueryDict
 
 
 class MovieQuery:
@@ -18,8 +15,6 @@ class MovieQuery:
                 result = MovieQuery.pkMovie(result, params['pk'])
             if params.get("slug"):
                 result = MovieQuery.slugMovie(result, params['slug'])
-            if params.get("page"):
-                result = MovieQuery.getPaginator(result, params['page'])
 
         return result
 
@@ -58,30 +53,3 @@ class MovieQuery:
             return scope.filter(category=category)
         else:
             return []
-
-    @staticmethod
-    def getPaginator(movie_list, page):
-        show_movies_page = 6
-        paginator = Paginator(movie_list, show_movies_page)
-
-        try:
-            movies = paginator.page(page)
-        except PageNotAnInteger:
-            movies = paginator.page(1)
-        except EmptyPage:
-            movies = paginator.page(paginator.num_pages)
-
-        return movies
-
-    @staticmethod
-    def sumQuery(path_url):
-        if path_url:
-            query_as_dict = QueryDict(path_url).copy()
-            if query_as_dict.get('page'):
-                del query_as_dict['page']
-            query_as_string = urlencode(query_as_dict)
-            query_as_string += "&"
-
-            return query_as_string
-        else:
-            return ''
