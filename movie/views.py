@@ -42,7 +42,7 @@ def post_Home(request):
 
     if movies_list:
         movies = Paginat.getPaginator(movies_list, request.GET.get('page', ' '))
-        path = PathRequest.sumQuery(request.GET.urlencode())
+        path = PathRequest.getQueryWithout(request.GET.urlencode())
         return render(request, 'home.html', {'movies': movies, 'categories': categories, 'path': path})
     else:
         return render(request, 'request_not_found.html')
@@ -77,7 +77,7 @@ def detail_category(request, slug):
     movies_list = MovieQuery.filterRequest(params)
 
     if movies_list:
-        path = PathRequest.sumQuery(request.GET.urlencode())
+        path = PathRequest.getQueryWithout(request.GET.urlencode())
         movies = Paginat.getPaginator(movies_list, request.GET.get('page', ' '))
         return render(request, "categories_detail.html", {'movies': movies, 'slug': slug, 'path': path})
     else:

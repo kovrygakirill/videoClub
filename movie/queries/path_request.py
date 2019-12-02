@@ -4,7 +4,7 @@ from django.http.request import QueryDict
 
 class PathRequest:
     @staticmethod
-    def sumQuery(path_url):
+    def getQueryWithout(path_url):
         if path_url:
             query_as_dict = QueryDict(path_url).copy()
             if query_as_dict.get('page'):
