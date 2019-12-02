@@ -35,7 +35,7 @@ class MovieQuery:
     @staticmethod
     def searchMovies(scope, search):
         if scope:
-            return scope.filter(movie_name=search)
+            return scope.filter(movie_name__iregex=search)
         else:
             return []
 
