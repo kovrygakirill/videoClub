@@ -23,7 +23,7 @@ class Movie(models.Model):
     link_movie = models.CharField(max_length=100)
     like = models.PositiveIntegerField(default=0, editable=False)
     dislike = models.PositiveIntegerField(default=0, editable=False)
-    created_date = models.DateTimeField(auto_now=True, null=True)
+    created_date = models.DateTimeField(auto_now_add=True, null=True)
 
     object = models.Manager()
 
