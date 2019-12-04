@@ -1,5 +1,5 @@
 {% extends 'home.html' %}
-
+{% load static %}
 
 {% block movie %}
     {% for movie in movies %}
@@ -14,6 +14,8 @@
                 </div>
             </div>
             <div class="card-footer text-muted">
+                <p><a href="{% url 'add_like' pk=movie.pk %}"><img src="{% static "image/like.jpg"%}" width='25px' height='25px'></a>{{ movie.like }}</p>
+                <p><a href="{% url 'add_dislike' pk=movie.pk %}"><img src="{% static "image/dislike.jpg"%}" width='25px' height='25px'></a>{{ movie.dislike }}</p>
                 <p class="card-text">{{movie.created_date}}</p>
             </div>
         </div>

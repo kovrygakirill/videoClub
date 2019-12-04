@@ -12,6 +12,7 @@ from .queries.movie_query import MovieQuery
 from .models import Category, Movie
 from .queries.pagination import Paginat
 from .queries.path_request import PathRequest
+from django.core.exceptions import ObjectDoesNotExist
 
 
 # import pdb; pdb.set_trace()
@@ -92,6 +93,26 @@ def random_movie(request):
     # response = redirect('/movie/' + pk, {'movie': movie})
     # return response
     return redirect(path)
+
+
+def addLike(request, pk):
+    try:
+        movie = Movie.object.get(pk=pk)
+        movie.like += 1
+        movie.save()
+    except ObjectDoesNotExist:
+        return render(request, 'request_not_found.html')
+    return redirect("/")
+
+
+def addDislike(request, pk):
+    try:
+        movie = Movie.object.get(pk=pk)
+        movie.dislike += 1
+        movie.save()
+    except ObjectDoesNotExist:
+        return render(request, 'request_not_found.html')
+    return redirect("/")
 
 
 def error_404(request):
