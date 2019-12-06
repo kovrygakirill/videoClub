@@ -74,9 +74,10 @@
             </div>
           </div>
           <div class="card-footer text-muted">
-              <p><a href="{% url 'add_like' pk=movie.pk %}"><img src="{% static "image/like.jpg"%}" width='25px' height='25px'></a>{{ movie.like }}</p>
-              <p><a href="{% url 'add_dislike' pk=movie.pk %}"><img src="{% static "image/dislike.jpg"%}" width='25px' height='25px'></a>{{ movie.dislike }}</p>
+{#              <p><a href="{% url 'add_like' pk=movie.pk %}"><img src="{% static "image/like.jpg"%}" width='25px' height='25px'></a>{{ movie.like }}</p>#}
+{#              <p><a href="{% url 'add_dislike' pk=movie.pk %}"><img src="{% static "image/dislike.jpg"%}" width='25px' height='25px'></a>{{ movie.dislike }}</p>#}
             <p class="card-text">{{movie.created_date}}</p>
+{#              <button id="like"><img src="{% static "image/like.jpg"%}" width='25px' height='25px'></button>#}
           </div>
         </div>
         {% endfor %}
@@ -200,6 +201,8 @@
   <!-- Bootstrap core JavaScript -->
   <script src="{% static 'js/jquery.js' %}"></script>
   <script src="{% static 'js/bootstrap.js' %}"></script>
+
+  <script src="{% static 'js/scripts.js' %}"></script>
 
 </body>
 
