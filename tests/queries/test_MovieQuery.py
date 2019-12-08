@@ -100,6 +100,20 @@ class TestMovieQuery(unittest.TestCase):
         result = []
         self.assertEquals(list(movies), list(result))
 
+    def test_filterRequest_getMoviesNoneSlugAndCorrectSort_AllMoviesSort(self):
+        params = {'slug': None, 'sort': 'Alphabet'}
+        movies = MovieQuery.filterRequest(params)
+
+        result = Movie.object.order_by("movie_name")
+        self.assertEquals(list(movies), list(result))
+
+    def test_filterRequest_getMoviesCorrectSlugAndNoneSort_Moviesslug(self):
+        params = {'slug': 'drama', 'sort': None}
+        movies = MovieQuery.filterRequest(params)
+
+        result = Movie.object.filter(category=Category.object.get(slug='drama')).order_by("-created_date")
+        self.assertEquals(list(movies), list(result))
+
     def test_filterRequest_getMoviesWrongSlugAndSort_MoviesNotExists(self):
         params = {'slug': 'tiller', 'sort': 'image'}
         movies = MovieQuery.filterRequest(params)
