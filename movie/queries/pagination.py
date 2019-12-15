@@ -18,3 +18,20 @@ class Paginat:
             return movies
         else:
             return None
+
+    @staticmethod
+    def showPageList(amountPage, currentPage):
+        if currentPage <= 2:
+            if amountPage < 5:
+                result = range(1, amountPage+1)
+            else:
+                result = range(1, 6)
+        elif currentPage >= amountPage - 2:
+            if amountPage < 5:
+                result = range(1, amountPage+1)
+            else:
+                result = range(amountPage - 4, amountPage+1)
+        else:
+            result = range(currentPage - 2, currentPage + 3)
+
+        return result

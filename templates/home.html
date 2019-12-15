@@ -108,19 +108,25 @@
 {#        </ul>#}
             <div class="pagination">
                 <span class="step-links">
-                    {% if movies.has_previous %}
-                        <a href="?{{ path }}page=1">&laquo; first</a>
-                        <a href="?{{ path }}page={{ movies.previous_page_number }}">previous</a>
-                    {% endif %}
+                    <ul class="pagination">
+                        {% if movies.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?{{ path }}page=1">&laquo;&laquo;</a></li>
+                            <li class="page-item"><a class="page-link" href="?{{ path }}page={{ movies.previous_page_number }}">&laquo;</a></li>
+                        {% endif %}
 
-                    <span class="current">
-                        Page {{ movies.number }} of {{ movies.paginator.num_pages }}.
-                    </span>
+                        {% for page in rangePage %}
+                            {% if page == movies.number %}
+                                <li class="page-item active"><a class="page-link" href="?{{ path }}page={{ page }}">{{ page }}</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="?{{ path }}page={{ page }}">{{ page }}</a></li>
+                            {% endif %}
+                        {% endfor %}
 
-                    {% if movies.has_next %}
-                        <a href="?{{ path }}page={{ movies.next_page_number }}">next</a>
-                        <a href="?{{ path }}page={{ movies.paginator.num_pages }}">last &raquo;</a>
-                    {% endif %}
+                        {% if movies.has_next %}
+                            <li class="page-item"><a class="page-link" href="?{{ path }}page={{ movies.next_page_number }}">&raquo;</a></li>
+                            <li class="page-item"><a class="page-link" href="?{{ path }}page={{ movies.paginator.num_pages }}">&raquo;&raquo;</a></li>
+                        {% endif %}
+                    </ul>
                  </span>
             </div>
         {% endblock paginat %}

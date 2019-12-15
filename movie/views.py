@@ -44,7 +44,9 @@ def post_Home(request):
     if movies_list:
         movies = Paginat.getPaginator(movies_list, request.GET.get('page', ' '))
         path = PathRequest.getQueryWithoutPage(request.GET.urlencode())
-        return render(request, 'home.html', {'movies': movies, 'categories': categories, 'path': path})
+        rangePage = Paginat.showPageList(movies.paginator.num_pages, movies.number)
+        return render(request, 'home.html',
+                      {'movies': movies, 'categories': categories, 'path': path, 'rangePage': rangePage})
     else:
         return render(request, 'request_not_found.html')
 
@@ -80,7 +82,9 @@ def detail_category(request, slug):
     if movies_list:
         path = PathRequest.getQueryWithoutPage(request.GET.urlencode())
         movies = Paginat.getPaginator(movies_list, request.GET.get('page', ' '))
-        return render(request, "categories_detail.html", {'movies': movies, 'slug': slug, 'path': path})
+        rangePage = Paginat.showPageList(movies.paginator.num_pages, movies.number)
+        return render(request, "categories_detail.html",
+                      {'movies': movies, 'slug': slug, 'path': path, 'rangePage': rangePage, })
     else:
         return render(request, 'request_not_found.html')
 
@@ -95,24 +99,24 @@ def random_movie(request):
     return redirect(path)
 
 
-def addLike(request, pk):
-    try:
-        movie = Movie.object.get(pk=pk)
-        movie.like += 1
-        movie.save()
-    except ObjectDoesNotExist:
-        return render(request, 'request_not_found.html')
-    return redirect("/")
-
-
-def addDislike(request, pk):
-    try:
-        movie = Movie.object.get(pk=pk)
-        movie.dislike += 1
-        movie.save()
-    except ObjectDoesNotExist:
-        return render(request, 'request_not_found.html')
-    return redirect("/")
+# def addLike(request, pk):
+#     try:
+#         movie = Movie.object.get(pk=pk)
+#         movie.like += 1
+#         movie.save()
+#     except ObjectDoesNotExist:
+#         return render(request, 'request_not_found.html')
+#     return redirect("/")
+#
+#
+# def addDislike(request, pk):
+#     try:
+#         movie = Movie.object.get(pk=pk)
+#         movie.dislike += 1
+#         movie.save()
+#     except ObjectDoesNotExist:
+#         return render(request, 'request_not_found.html')
+#     return redirect("/")
 
 
 def error_404(request):
