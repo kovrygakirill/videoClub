@@ -1,4 +1,5 @@
 import django
+
 django.setup()
 
 from unittest import TestCase
@@ -63,3 +64,38 @@ class TestPaginat(TestCase):
 
         result = None
         self.assertEquals(movies, result)
+
+    def test_showPageList_getRangePageCurrentLess2_rangeAmountPage(self):
+        currentPage = 1
+        amountPage = 6
+
+        result = Paginat.showPageList(amountPage, currentPage)
+        self.assertEquals(range(1, 6), result)
+
+    def test_showPageList_getRangePageCurrentLess2AndAmountLess5_rangeAmountPage(self):
+        currentPage = 1
+        amountPage = 4
+
+        result = Paginat.showPageList(amountPage, currentPage)
+        self.assertEquals(range(1, 5), result)
+
+    def test_showPageList_getRangePageCurrentEquallyAmountAndAmountLess5_rangeAmountPage(self):
+        currentPage = 3
+        amountPage = 3
+
+        result = Paginat.showPageList(amountPage, currentPage)
+        self.assertEquals(range(1, 4), result)
+
+    def test_showPageList_getRangePageCurrentEquallyAmount_rangeAmountPage(self):
+        currentPage = 10
+        amountPage = 10
+
+        result = Paginat.showPageList(amountPage, currentPage)
+        self.assertEquals(range(6, 11), result)
+
+    def test_showPageList_getRangePageCurrent10yAndAmount15_range5Pages(self):
+        currentPage = 10
+        amountPage = 15
+
+        result = Paginat.showPageList(amountPage, currentPage)
+        self.assertEquals(range(8, 13), result)
