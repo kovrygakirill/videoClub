@@ -22,26 +22,6 @@
     {% endfor %}
 {% endblock movie %}
 
-{%block paginat%}
-    <div class="pagination">
-        <span class="step-links">
-            {% if movies.has_previous %}
-                <a href="?{{ path }}page=1">&laquo; first</a>
-                <a href="?{{ path }}page={{ movies.previous_page_number }}">previous</a>
-            {% endif %}
-
-            <span class="current">
-                Page {{ movies.number }} of {{ movies.paginator.num_pages }}.
-            </span>
-
-            {% if movies.has_next %}
-                <a href="?{{ path }}page={{ movies.next_page_number }}">next</a>
-                <a href="?{{ path }}page={{ movies.paginator.num_pages }}">last &raquo;</a>
-            {% endif %}
-         </span>
-    </div>
-{% endblock paginat %}
-
 {% block Search%}
 {% endblock Search%}
 
