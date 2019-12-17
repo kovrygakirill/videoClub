@@ -250,7 +250,7 @@ class TestMovieQuery(unittest.TestCase):
         search = 'Почему'
         movies = MovieQuery.searchMovies(scope, search)
 
-        result = Movie.object.filter(movie_name='Почему он?')
+        result = Movie.object.filter(movie_name__iregex='Почему')
         self.assertEquals(list(movies), list(result))
 
     def test_searchMovies_getMovieNoneSearch_MoviesNotExists(self):
