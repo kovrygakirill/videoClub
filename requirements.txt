@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 asgiref==3.2.3
 defusedxml==0.6.0
 diff-match-patch==20181111
@@ -9,6 +10,9 @@ MarkupPy==1.14
 odfpy==1.4.0
 openpyxl==3.0.2
 Pillow==6.2.1
+=======
+Django==2.2.8
+>>>>>>> 1b12a40061bd7765f54889c0e513cfc8410f6d9d
 pytz==2019.3
 PyYAML==5.2
 sqlparse==0.3.0
