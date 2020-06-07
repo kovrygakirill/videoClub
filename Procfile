@@ -1,1 +1,1 @@
-web: gunicorn videoClub.wsgi --log-file -
+web: gunicorn --pythonpath app videoClub.wsgi --log-file -
