@@ -138,8 +138,6 @@ django_heroku.settings(locals())
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-STATIC_ROOT='staticfiles'
-
 # LOGGING = {
 #     'version': 1,
 #     'filters': {
