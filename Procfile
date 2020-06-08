@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath videoClub videoClub.wsgi
+web: gunicorn videoClub.wsgi
