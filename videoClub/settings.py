@@ -78,10 +78,10 @@ WSGI_APPLICATION = 'videoClub.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd75kh9dkf6ibup',
-        'USER': 'rretwtgujsdxtl',
-        'PASSWORD': '5546c1c6c7fc4bae4dbc66caad6bd1639c34dff2e9963f098dc9ed5d1f0565ef',
-        'HOST': 'ec2-34-194-198-176.compute-1.amazonaws.com',
+        'NAME': 'videoclub',
+        'USER': 'videoclub',
+        'PASSWORD': '1111',
+        'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }
@@ -127,7 +127,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static_in_dev'),
+    os.path.join(BASE_DIR, 'static'),
 )
 
 # Heroku: Update database configuration from $DATABASE_URL.
