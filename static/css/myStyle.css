@@ -1,0 +1,13 @@
+body {
+  /*background-image: url("../../static/css/image/backGround.jpg"); !* Путь к фоновому изображению *!*/
+  background-color: #6c757d;
+  color: #000000;
+}
+
+.text_like{
+  color: #19692c;
+}
+
+.text_dislike{
+  color: #ff0000;
+}

@@ -1,7 +1,7 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <head>
 
@@ -17,7 +17,7 @@
 
   <!-- Custom styles for this template -->
   <link href="{% static 'css/blog-home.css' %}" rel="stylesheet">
-  <link href="{% static 'css/myStyle.css' %}" rel="stylesheet">
+  <link href="{% static 'css/myStyle.css' %}" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -27,7 +27,8 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
       <a class="navbar-brand">Video Club</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+			  aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -71,12 +72,22 @@
             <div class="card-body">
               <h2 class="card-title">{{movie.movie_name}}</h2>
               <p class="card-text">{{movie.plot}}</p>
-              <a href="{% url 'detail_movies' pk=movie.pk %}" class="btn btn-primary">Read More →</a>
+              <a href="{% url 'detail_movies' pk=movie.pk %}" class="btn btn-primary">Read More →</a><br><br>
+
+			  <a type="submit">
+				  <img name="{{ movie.pk }}" class="like" src="{% static "image/like.jpg"%}"
+									width='25px' height='25px' title="Понравилоя">
+				  <span class="text_like" id="movie_likes_{{ movie.pk }}">{{ movie.like }}</span>
+			  </a>
+
+			  <a type="submit">
+				  <img name="{{ movie.pk }}" class="dislike" src="{% static "image/dislike.jpg"%}"
+									width='25px' height='25px' title="Не понравилоя">
+				  <span class="text_dislike" id="movie_dislikes_{{ movie.pk }}">{{ movie.dislike }}</span>
+			  </a>
             </div>
           </div>
           <div class="card-footer text-muted">
-{#              <p><a href="{% url 'add_like' pk=movie.pk %}"><img src="{% static "image/like.jpg"%}" width='25px' height='25px'></a>{{ movie.like }}</p>#}
-{#              <p><a href="{% url 'add_dislike' pk=movie.pk %}"><img src="{% static "image/dislike.jpg"%}" width='25px' height='25px'></a>{{ movie.dislike }}</p>#}
             <p class="card-text">{{movie.created_date}}</p>
 {#              <button id="like"><img src="{% static "image/like.jpg"%}" width='25px' height='25px'></button>#}
           </div>
@@ -111,21 +122,27 @@
                 <span class="step-links">
                     <ul class="pagination">
                         {% if movies.has_previous %}
-                            <li class="page-item"><a class="page-link" href="?{{ path }}page=1">&laquo;&laquo;</a></li>
-                            <li class="page-item"><a class="page-link" href="?{{ path }}page={{ movies.previous_page_number }}">&laquo;</a></li>
+                            <li class="page-item"><a class="page-link"
+												href="?{{ path }}page=1">&laquo;&laquo;</a></li>
+                            <li class="page-item"><a class="page-link"
+												href="?{{ path }}page={{ movies.previous_page_number }}">&laquo;</a></li>
                         {% endif %}
 
                         {% for page in rangePage %}
                             {% if page == movies.number %}
-                                <li class="page-item active"><a class="page-link" href="?{{ path }}page={{ page }}">{{ page }}</a></li>
+                                <li class="page-item active"><a class="page-link"
+														href="?{{ path }}page={{ page }}">{{ page }}</a></li>
                             {% else %}
-                                <li class="page-item"><a class="page-link" href="?{{ path }}page={{ page }}">{{ page }}</a></li>
+                                <li class="page-item"><a class="page-link"
+														 href="?{{ path }}page={{ page }}">{{ page }}</a></li>
                             {% endif %}
                         {% endfor %}
 
                         {% if movies.has_next %}
-                            <li class="page-item"><a class="page-link" href="?{{ path }}page={{ movies.next_page_number }}">&raquo;</a></li>
-                            <li class="page-item"><a class="page-link" href="?{{ path }}page={{ movies.paginator.num_pages }}">&raquo;&raquo;</a></li>
+                            <li class="page-item"><a class="page-link"
+												href="?{{ path }}page={{ movies.next_page_number }}">&raquo;</a></li>
+                            <li class="page-item"><a class="page-link"
+										href="?{{ path }}page={{ movies.paginator.num_pages }}">&raquo;&raquo;</a></li>
                         {% endif %}
                     </ul>
                  </span>
@@ -206,10 +223,10 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
+{#  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>#}
   <script src="{% static 'js/jquery.js' %}"></script>
+  <script src="{% static 'js/my_script.js' %}"></script>
   <script src="{% static 'js/bootstrap.js' %}"></script>
-
-  <script src="{% static 'js/scripts.js' %}"></script>
 
 </body>
 

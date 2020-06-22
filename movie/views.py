@@ -13,6 +13,7 @@ from .models import Category, Movie
 from .queries.pagination import Paginat
 from .queries.path_request import PathRequest
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
 
 
 # import pdb; pdb.set_trace()
@@ -99,6 +100,20 @@ def random_movie(request):
     return redirect(path)
 
 
+def addLike(request):
+    if request.POST:
+        pk = request.POST.get("pk", None)
+        movie = Movie.object.get(pk=pk)
+        movie.like += 1
+        movie.save()
+        data = {
+            'count_like': movie.like
+        }
+        return JsonResponse(data)
+
+    return redirect("/")
+
+
 # def addLike(request, pk):
 #     try:
 #         movie = Movie.object.get(pk=pk)
@@ -107,8 +122,21 @@ def random_movie(request):
 #     except ObjectDoesNotExist:
 #         return render(request, 'request_not_found.html')
 #     return redirect("/")
-#
-#
+
+def addDislike(request):
+    if request.POST:
+        pk = request.POST.get("pk", None)
+        movie = Movie.object.get(pk=pk)
+        movie.dislike += 1
+        movie.save()
+        data = {
+            'count_like': movie.dislike
+        }
+        return JsonResponse(data)
+
+    return redirect("/")
+
+
 # def addDislike(request, pk):
 #     try:
 #         movie = Movie.object.get(pk=pk)
