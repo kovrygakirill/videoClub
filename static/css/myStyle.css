@@ -11,3 +11,16 @@ body {
 .text_dislike{
   color: #ff0000;
 }
+
+#two_column li {
+  /*background-color: red;*/
+    display: block;
+    float: left;
+    width: 50%;
+    /*border: 1px solid #ccc;*/
+}
+#two_column{
+  margin-left: 5%;
+  padding: 0;
+  /*list-style-type: none;*/
+}

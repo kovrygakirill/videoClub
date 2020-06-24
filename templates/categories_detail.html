@@ -1,45 +1,9 @@
 {% extends 'home.html' %}
 {% load static %}
 
-{% block movie %}
-    {% for movie in movies %}
-        <!-- Blog Post -->
-        <div class="card mb-4">
-            <div style="display: flex; flex-direction: row;">
-                <img src="/media/{{movie.image}}" width="180" height="250" alt="Card image cap">
-                <div class="card-body">
-                    <h2 class="card-title">{{movie.movie_name}}</h2>
-                    <p class="card-text">{{movie.plot}}</p>
-                    <a href="{% url 'detail_movies' pk=movie.pk %}" class="btn btn-primary">Read More →</a>
-                </div>
-            </div>
-            <div class="card-footer text-muted">
-{#                <p><a href="{% url 'add_like' pk=movie.pk %}"><img src="{% static "image/like.jpg"%}" width='25px' height='25px'></a>{{ movie.like }}</p>#}
-{#                <p><a href="{% url 'add_dislike' pk=movie.pk %}"><img src="{% static "image/dislike.jpg"%}" width='25px' height='25px'></a>{{ movie.dislike }}</p>#}
-                <p class="card-text">{{movie.created_date}}</p>
-            </div>
-        </div>
-    {% endfor %}
-{% endblock movie %}
-
 {% block Search%}
 {% endblock Search%}
 
 {% block Categories %}
 {% endblock Categories %}
 
-{% block Sorting %}
-    <div class="card my-4">
-        <h5 class="card-header">Sorting</h5>
-        <div class="card-body">
-            <ul class="list-unstyled mb-0">
-                <li>
-                    <a href="{% url 'detail_category' slug=slug %}?sort=Alphabet">Alphabet</a>
-                </li>
-                <li>
-                    <a href="{%url 'detail_category' slug=slug %}?sort=Date">Date</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-{% endblock Sorting %}
