@@ -31,22 +31,38 @@
 			  aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+	  {% block navigation %}
+
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a class="nav-link" href="{% url 'random_movie' %}">Random Movie</a>
           </li>
-          <li class="nav-item active">
+          <li class="nav-item">
             <a class="nav-link" href="/">Home
               <span class="sr-only">(current)</span>
             </a>
           </li>
+		  {% if username %}
+			 <li class="nav-item">
+           		 <a class="nav-link active" href="{% url 'logout' %}">Log out({{ username }})</a>
+         	 </li>
+		  {% else %}
+			  <li class="nav-item">
+           		 <a class="nav-link active" href="{% url 'login' %}">Log in</a>
+         	 </li>
+		  {% endif %}
+
         </ul>
       </div>
+	  {% endblock navigation %}
     </div>
   </nav>
 
   <!-- Page Content -->
+  {% block login %}
+  {% endblock login %}
+
   <div class="container">
 
     <div class="row">
@@ -80,6 +96,8 @@
 									width='25px' height='25px' title="Не понравилоя">
 				  <span class="text_dislike" id="movie_dislikes_{{ movie.pk }}">{{ movie.dislike }}</span>
 			  </a>
+
+			  <span name="{{ username }}" class="warn_like_dis" id="warn_like_dislike_{{ movie.pk }}"></span> {# You cannot,need authorization #}
             </div>
           </div>
           <div class="card-footer text-muted">

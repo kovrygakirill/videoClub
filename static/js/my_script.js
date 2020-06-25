@@ -2,6 +2,12 @@ $(document).ready(function () {
 
     $(".like").click(function (event) {
         var id_movie = $(this).attr('name');
+        var username = $(".warn_like_dis").attr("name");
+
+        if (!username){
+            $("#warn_like_dislike_"+id_movie).text("You cannot,need authorization");
+            return
+        }
         // alert(id_movie);
         $.ajax({
             type: 'POST',
@@ -22,8 +28,13 @@ $(document).ready(function () {
 
     $(".dislike").click(function (event) {
         var id_movie = $(this).attr('name');
-        // alert(id_movie);
+        var username = $(".warn_like_dis").attr("name");
 
+        // alert(id_movie);
+        if (!username){
+            $("#warn_like_dislike_"+id_movie).text("You cannot,need authorization");
+            return
+        }
         $.ajax({
             type: "POST",
             url: '/add_dislike/',

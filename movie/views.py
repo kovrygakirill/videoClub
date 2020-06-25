@@ -14,6 +14,7 @@ from .queries.pagination import Paginat
 from .queries.path_request import PathRequest
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
+from django.contrib import auth
 
 
 # import pdb; pdb.set_trace()
@@ -47,7 +48,8 @@ def post_Home(request):
         path = PathRequest.getQueryWithoutPage(request.GET.urlencode())
         rangePage = Paginat.showPageList(movies.paginator.num_pages, movies.number)
         return render(request, 'home.html',
-                      {'movies': movies, 'categories': categories, 'path': path, 'rangePage': rangePage})
+                      {'movies': movies, 'categories': categories,
+                       'path': path, 'rangePage': rangePage, "username": auth.get_user(request).username})
     else:
         return render(request, 'request_not_found.html')
 
@@ -59,7 +61,7 @@ def detail_movies(request, pk):
     movie = MovieQuery.filterRequest(params)
 
     if movie:
-        return render(request, 'movie.html', {'movie': movie})
+        return render(request, 'movie.html', {'movie': movie, "username": auth.get_user(request).username})
     else:
         return render(request, 'request_not_found.html')
     #
@@ -85,7 +87,7 @@ def detail_category(request, slug):
         movies = Paginat.getPaginator(movies_list, request.GET.get('page', ' '))
         rangePage = Paginat.showPageList(movies.paginator.num_pages, movies.number)
         return render(request, "categories_detail.html",
-                      {'movies': movies, 'slug': slug, 'path': path, 'rangePage': rangePage, })
+                      {'movies': movies, 'slug': slug, 'path': path, 'rangePage': rangePage, "username": auth.get_user(request).username})
     else:
         return render(request, 'request_not_found.html')
 
