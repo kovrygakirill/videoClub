@@ -10,6 +10,7 @@
 <body>
 	<div class="login">
 		<div id="formContent">
+		{% block auth %}
 			<form action="/auth/login/" method="post">
 				<input type="text" name="username" id="username" placeholder="Name"><br>
 				<input type="password" name="password" id="password" placeholder="Password"><br>
@@ -18,6 +19,12 @@
 				{% endif %}
 				<input type="submit" value="Log in">
 			</form>
+		{% endblock auth %}
+		{% block reg %}
+			<div id="formFooter">
+				<a class="underlineHover" href="/auth/register/">Registration</a>
+			</div>
+		{% endblock reg %}
 		</div>
 	</div>
 </body>

@@ -11,6 +11,13 @@ label{
   color: #ff2311;
 }
 
+a {
+  color: #92badd;
+  display:inline-block;
+  text-decoration: none;
+  font-weight: 400;
+}
+
 .login{
   display: flex;
   align-items: center;
@@ -28,26 +35,28 @@ label{
   /*border: 1px solid #ccc;*/
 
   background: #fff;
-  padding: 30px;
+  /*padding-bottom: 30px*/
   width: 90%;
   max-width: 450px;
   position: relative;
+  padding: 0px;
   -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
   box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  text-align: center;
 }
 
 input[type=submit]{
   background-color: #56baed;
   border: none;
   color: white;
-  padding: 15px 80px;
+  padding: 15px 100px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   text-transform: uppercase;
   font-size: 13px;
   border-radius: 5px 5px 5px 5px;
-  margin: 5px 20px 10px 20px;
+  margin: 5px 20px 45px 20px;
 }
 
 input[type=submit]:hover{
@@ -58,11 +67,11 @@ input[type=submit]:active{
       transform: scale(0.95);
 }
 
-input[type=text],input[type=password]  {
+input[type=text],input[type=password],input[type=email]  {
   background-color: #f6f6f6;
   outline:none;
   color: #0d0d0d;
-  padding: 15px 32px;
+  padding: 15px 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -82,4 +91,37 @@ input[type=password]:focus {
 input[type=text]:focus {
   background-color: #fff;
   border-bottom: 2px solid #5fbae9;
+}
+
+input[type=email]:focus {
+  background-color: #fff;
+  border-bottom: 2px solid #5fbae9;
+}
+
+#formFooter {
+  background-color: #f6f6f6;
+  border-top: 1px solid #dce8f1;
+  padding: 25px;
+  text-align: center;
+  -webkit-border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px;
+}
+
+.underlineHover:after {
+  display: block;
+  left: 0;
+  bottom: -10px;
+  width: 0;
+  height: 2px;
+  background-color: #56baed;
+  content: "";
+  transition: width 0.2s;
+}
+
+.underlineHover:hover {
+  color: #0d0d0d;
+}
+
+.underlineHover:hover:after{
+  width: 100%;
 }
