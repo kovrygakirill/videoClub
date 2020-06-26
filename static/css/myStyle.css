@@ -30,3 +30,15 @@ body {
     font-size: small;
     padding-left: 20px;
 }
+
+#plot_home, #plot_movie{
+    text-align: justify;
+}
+
+.plot{
+    /*background-color: #19692c;*/
+    display: block;
+    max-height: 100px;
+    outline: none;
+    overflow: hidden;
+}

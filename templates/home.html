@@ -82,7 +82,7 @@
             <img src="/media/{{ movie.image }}" width="180" height="250" alt="Card image cap">
             <div class="card-body">
               <h2 class="card-title">{{movie.movie_name}}</h2>
-              <p class="card-text">{{movie.plot}}</p>
+              <p id="plot_home" class="plot">{{movie.plot}}</p>
               <a href="{% url 'detail_movies' pk=movie.pk %}" class="btn btn-primary">Read More →</a><br><br>
 
 			  <a type="submit">
