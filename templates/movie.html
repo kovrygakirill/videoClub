@@ -28,10 +28,15 @@
 				  <img name="{{ movie.pk }}" class="dislike" src="{% static "image/dislike.jpg"%}"
 									width='25px' height='25px' title="Не понравилоя">
 				  <span class="text_dislike" id="movie_dislikes_{{ movie.pk }}">{{ movie.dislike }}</span>
-				<span name="{{ username }}" class="warn_like_dis" id="warn_like_dislike_{{ movie.pk }}"></span> {# You cannot,need authorization #}
 
-			  	</a>
-            </div>
+				</a>
+				{% if movie.pk in user_like_dislike %}
+			  <span name="{{ username }}" class="warn_like_dis"
+					id="warn_like_dislike_{{ movie.pk }}">You have already voted</span>
+			  {% else %}
+				<span name="{{ username }}" class="warn_like_dis" id="warn_like_dislike_{{ movie.pk }}"></span>
+			  {% endif %}
+			</div>
           </div>
           <div class="card-footer text-muted">
             <p class="card-text">{{movie.created_date}}</p>

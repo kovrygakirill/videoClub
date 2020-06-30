@@ -36,3 +36,13 @@ class Movie(models.Model):
         return self.movie_name
 
     # pub_date = models.DateTimeField('date published')
+
+
+class UserLikeDislike(models.Model):
+    id_user = models.IntegerField()
+    id_movie = models.IntegerField()
+
+    object = models.Manager()
+
+    def __str__(self):
+        return str(self.id_movie)

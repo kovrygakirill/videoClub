@@ -9,12 +9,14 @@ from django.shortcuts import render, redirect
 # from .models import Category, Movie
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .queries.movie_query import MovieQuery
-from .models import Category, Movie
+from .models import Category, Movie, UserLikeDislike
 from .queries.pagination import Paginat
 from .queries.path_request import PathRequest
+from .queries.like_dislike import user_like_dislike_movie
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.contrib import auth
+from django.contrib.auth.models import User
 
 
 # import pdb; pdb.set_trace()
@@ -47,9 +49,11 @@ def post_Home(request):
         movies = Paginat.getPaginator(movies_list, request.GET.get('page', ' '))
         path = PathRequest.getQueryWithoutPage(request.GET.urlencode())
         rangePage = Paginat.showPageList(movies.paginator.num_pages, movies.number)
+        user_like_dislike = user_like_dislike_movie(UserLikeDislike.object.filter(id_user=auth.get_user(request).id))
+
         return render(request, 'home.html',
-                      {'movies': movies, 'categories': categories,
-                       'path': path, 'rangePage': rangePage, "username": auth.get_user(request).username})
+                      {'movies': movies, 'categories': categories, 'path': path, 'rangePage': rangePage,
+                       "username": auth.get_user(request).username, 'user_like_dislike': user_like_dislike})
     else:
         return render(request, 'request_not_found.html')
 
@@ -61,7 +65,9 @@ def detail_movies(request, pk):
     movie = MovieQuery.filterRequest(params)
 
     if movie:
-        return render(request, 'movie.html', {'movie': movie, "username": auth.get_user(request).username})
+        user_like_dislike = user_like_dislike_movie(UserLikeDislike.object.filter(id_user=auth.get_user(request).id))
+        return render(request, 'movie.html', {'movie': movie, "username": auth.get_user(request).username,
+                                              'user_like_dislike' : user_like_dislike})
     else:
         return render(request, 'request_not_found.html')
     #
@@ -86,8 +92,10 @@ def detail_category(request, slug):
         path = PathRequest.getQueryWithoutPage(request.GET.urlencode())
         movies = Paginat.getPaginator(movies_list, request.GET.get('page', ' '))
         rangePage = Paginat.showPageList(movies.paginator.num_pages, movies.number)
+        user_like_dislike = user_like_dislike_movie(UserLikeDislike.object.filter(id_user=auth.get_user(request).id))
         return render(request, "categories_detail.html",
-                      {'movies': movies, 'slug': slug, 'path': path, 'rangePage': rangePage, "username": auth.get_user(request).username})
+                      {'movies': movies, 'slug': slug, 'path': path, 'rangePage': rangePage,
+                       "username": auth.get_user(request).username, 'user_like_dislike' : user_like_dislike})
     else:
         return render(request, 'request_not_found.html')
 
@@ -105,12 +113,60 @@ def random_movie(request):
 def addLike(request):
     if request.POST:
         pk = request.POST.get("pk", None)
+        username = request.POST.get("username", None)
         movie = Movie.object.get(pk=pk)
-        movie.like += 1
-        movie.save()
+
+        try:
+            user = User.objects.get(username=username)
+
+            if UserLikeDislike.object.filter(id_user=user.id, id_movie=int(pk)):
+                message = "You have already voted"
+            else:
+                movie.like += 1
+                movie.save()
+                user_like_dislike = UserLikeDislike(id_user=user.id, id_movie=int(pk))
+                user_like_dislike.save()
+                message = "Thank you, your vote has been accepted!"
+
+        except User.DoesNotExist:
+            message = "You cannot,need authorization"
+
         data = {
-            'count_like': movie.like
+            'count_like': movie.like,
+            'message': message
         }
+
+        return JsonResponse(data)
+
+    return redirect("/")
+
+
+def addDislike(request):
+    if request.POST:
+        pk = request.POST.get("pk", None)
+        username = request.POST.get("username", None)
+        movie = Movie.object.get(pk=pk)
+
+        try:
+            user = User.objects.get(username=username)
+
+            if UserLikeDislike.object.filter(id_user=user.id, id_movie=int(pk)):
+                message = "You have already voted"
+            else:
+                movie.dislike += 1
+                movie.save()
+                user_dislike = UserLikeDislike(id_user=user.id, id_movie=int(pk))
+                user_dislike.save()
+                message = "Thank you, your vote has been accepted!"
+
+        except User.DoesNotExist:
+            message = "You cannot,need authorization"
+
+        data = {
+            'count_like': movie.dislike,
+            'message': message
+        }
+
         return JsonResponse(data)
 
     return redirect("/")
@@ -124,20 +180,6 @@ def addLike(request):
 #     except ObjectDoesNotExist:
 #         return render(request, 'request_not_found.html')
 #     return redirect("/")
-
-def addDislike(request):
-    if request.POST:
-        pk = request.POST.get("pk", None)
-        movie = Movie.object.get(pk=pk)
-        movie.dislike += 1
-        movie.save()
-        data = {
-            'count_like': movie.dislike
-        }
-        return JsonResponse(data)
-
-    return redirect("/")
-
 
 # def addDislike(request, pk):
 #     try:
