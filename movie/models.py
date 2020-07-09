@@ -46,3 +46,16 @@ class UserLikeDislike(models.Model):
 
     def __str__(self):
         return str(self.id_movie)
+
+
+class Comments(models.Model):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    user = models.CharField(max_length=50)
+    content = models.TextField(null=True)
+    created_date = models.DateTimeField(auto_now_add=True, null=True)
+
+    object = models.Manager()
+
+    def __str__(self):
+        return self.content
+

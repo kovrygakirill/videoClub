@@ -21,6 +21,15 @@
 //     });
 // });
 $(document).ready(function () {
+    $(".form_texrarea").change(function () {
+       var content = $(".form_texrarea").val();
+       document.getElementById('post').disabled = !content;
+    });
+
+    $(function () {
+       var content = $(".form_texrarea").val();
+       document.getElementById('post').disabled = !content;
+    });
 
     $(".like").click(function (event) {
         var id_movie = $(this).attr('name');

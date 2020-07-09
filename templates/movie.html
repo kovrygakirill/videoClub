@@ -9,7 +9,6 @@
 
 {% block movie %}
         <!-- Blog Post -->
-<!--        {% if movie  != 'None' %}-->
         <div class="card mb-4">
           <div style="display: flex; flex-direction: row;">
             <img src="/media/{{movie.image}}" width="180" height="250" alt="Card image cap">
@@ -36,13 +35,42 @@
 			  {% else %}
 				<span name="{{ username }}" class="warn_like_dis" id="warn_like_dislike_{{ movie.pk }}"></span>
 			  {% endif %}
+					<div class="comment-wrapper">
+						<div class="panel-body">
+							{% if username %}
+							<form method="post">
+								<textarea class="form_texrarea" name="content" placeholder="write a comment..." rows="3"></textarea>
+								<br>
+								<button type="submit" id="post" class="btn btn-primary">Post</button>
+							</form>
+							{% endif %}
+							<hr>
+							<small>{{ comments.count }} Comments</small>
+							<ul class="media-list">
+								{% for comment in comments %}
+								<li class="media">
+									<div class="media-body">
+										<span class="text-muted pull-right">
+											<small class="text-muted">{{ comment.created_date }}</small>
+										</span>
+										<strong class="text-success">@{{ comment.user }}</strong>
+										<p>
+											{{ comment.content }}
+										</p>
+									</div>
+								</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+			  </div>
 			</div>
           </div>
           <div class="card-footer text-muted">
             <p class="card-text">{{movie.created_date}}</p>
           </div>
         </div>
-<!--        {% endif %}-->
+
 {% endblock movie %}
 
 {% block paginat %}

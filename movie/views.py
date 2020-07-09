@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect
 # from .models import Category, Movie
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .queries.movie_query import MovieQuery
-from .models import Category, Movie, UserLikeDislike
+from .models import Category, Movie, UserLikeDislike, Comments
 from .queries.pagination import Paginat
 from .queries.path_request import PathRequest
 from .queries.like_dislike import user_like_dislike_movie
@@ -17,6 +17,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.contrib import auth
 from django.contrib.auth.models import User
+from django.contrib.sessions.models import Session
 
 
 # import pdb; pdb.set_trace()
@@ -62,12 +63,19 @@ def detail_movies(request, pk):
     # movie = get_object_or_404(Movie, pk=pk)
     # return render(request, 'movie.html', {'movie': movie}x`x)
     params = {'pk': pk}
-    movie = MovieQuery.filterRequest(params)
+    movie = MovieQuery.filterRequest (params)
 
     if movie:
         user_like_dislike = user_like_dislike_movie(UserLikeDislike.object.filter(id_user=auth.get_user(request).id))
+        comments = Comments.object.filter(movie=movie)
+        if request.POST:
+            content = request.POST.get("content", "")
+            if content:
+                comment = Comments.object.create(movie=movie, user=auth.get_user(request).username, content=content)
+                comment.save()
+
         return render(request, 'movie.html', {'movie': movie, "username": auth.get_user(request).username,
-                                              'user_like_dislike' : user_like_dislike})
+                                              'user_like_dislike': user_like_dislike, 'comments': comments})
     else:
         return render(request, 'request_not_found.html')
     #
@@ -95,7 +103,7 @@ def detail_category(request, slug):
         user_like_dislike = user_like_dislike_movie(UserLikeDislike.object.filter(id_user=auth.get_user(request).id))
         return render(request, "categories_detail.html",
                       {'movies': movies, 'slug': slug, 'path': path, 'rangePage': rangePage,
-                       "username": auth.get_user(request).username, 'user_like_dislike' : user_like_dislike})
+                       "username": auth.get_user(request).username, 'user_like_dislike': user_like_dislike})
     else:
         return render(request, 'request_not_found.html')
 
