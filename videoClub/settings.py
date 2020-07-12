@@ -79,11 +79,11 @@ WSGI_APPLICATION = 'videoClub.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'videoclub',
-        'USER': 'videoclub',
-        'PASSWORD': '1111',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': os.environ["NAME"],
+        'USER': os.environ["USER"],
+        'PASSWORD': os.environ["PASSWORD"],
+        'HOST': os.environ["HOST"],
+        'PORT': os.environ["PORT"]
     }
 }
 
