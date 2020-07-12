@@ -190,6 +190,8 @@ celerybeat-schedule
 .mypy_cache/
 .dmypy.json
 dmypy.json
+db.json
+db.sqlite3
 
 # Pyre type checker
 .pyre/
