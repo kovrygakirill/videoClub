@@ -42,3 +42,100 @@ body {
     outline: none;
     overflow: hidden;
 }
+
+#image{
+    width: 180px;
+    height: 260px;
+}
+
+@media (max-width: 576px) {
+    .navbar-brand{
+        font-size: 18px;
+    }
+    h1{
+        font-size: 20px;
+    }
+    h2{
+        font-size: 15px;
+    }
+    h5{
+        font-size: 15px;
+    }
+
+    a{
+        font-size: 12px;
+    }
+
+    .form-control{
+        font-size: 12px;
+    }
+
+    .warn_like_dis{
+        font-size: 10px;
+    }
+
+    .media-body p, .text-success, .form_texrarea{
+        font-size: 12px;
+    }
+
+    .plot{
+        /*background-color: #19692c;*/
+        margin-bottom: 5px;
+        font-size: 12px;
+        display: block;
+        max-height: 70px;
+        outline: none;
+        overflow: hidden;
+    }
+
+    #plot_movie{
+        font-size: 12px;
+    }
+
+    .btn{
+        font-size: 10px;
+    }
+
+    a.btn{
+        margin-bottom: -20px;
+    }
+
+    .card-text{
+        font-size: 12px;
+    }
+
+    .card-body{
+        min-width: 100px;
+    }
+
+    .like, .dislike{
+        width: 15px;
+        height: 15px;
+        /*margin-top: -30px;*/
+    }
+    .text_like, .text_dislike{
+        font-size: 13px;
+    }
+
+    .text_like, .text_dislike,.like, .dislike{
+        /*margin-top: -40px;*/
+    }
+
+
+    #image{
+        width: 110px;
+        height: 180px;
+    }
+    .container{
+        /*background-color: red;*/
+        width: 100%;
+    }
+    .navbar{
+        /*width: 320px;*/
+        min-width: 320px;
+        max-width: 414px;
+    }
+    .card-title{
+        width: 100%;
+    }
+}

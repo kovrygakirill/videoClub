@@ -11,10 +11,10 @@
         <!-- Blog Post -->
         <div class="card mb-4">
           <div style="display: flex; flex-direction: row;">
-            <img src="/media/{{movie.image}}" width="180" height="250" alt="Card image cap">
+            <img  id="image" src="/media/{{ movie.image }}" alt="Card image cap">
             <div class="card-body">
                 <h2 class="card-title">{{movie.movie_name}}</h2>
-                <p id="plot_movie">{{movie.plot}}</p>
+                <p id="plot_movie" >{{movie.plot}}</p>
                 <p class="card-text">Жанр:  <a href="{% url 'detail_category' slug=movie.category.slug %}">{{movie.category}}</a></p>
                 <p class="card-text">Ссылка: <a href="{{movie.link_movie}}">{{movie.link_movie}}</a></p>
 				<a type="submit">
