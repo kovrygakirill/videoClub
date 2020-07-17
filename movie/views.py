@@ -137,7 +137,7 @@ def addLike(request):
                 message = "Thank you, your vote has been accepted!"
 
         except User.DoesNotExist:
-            message = "You cannot,need authorization"
+            message = "You can not vote,need authorization"
 
         data = {
             'count_like': movie.like,
@@ -168,7 +168,7 @@ def addDislike(request):
                 message = "Thank you, your vote has been accepted!"
 
         except User.DoesNotExist:
-            message = "You cannot,need authorization"
+            message = "You can not vote,need authorization"
 
         data = {
             'count_like': movie.dislike,
