@@ -222,4 +222,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Docker
+docker-compose.yml
+Dockerfile
+
 # End of https://www.gitignore.io/api/python,pycharm,windows
