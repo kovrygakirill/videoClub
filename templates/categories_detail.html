@@ -1,6 +1,12 @@
 {% extends 'home.html' %}
 {% load static %}
 
+{% block image %}
+	<div>
+		<img  id="image" src="/media/{{ movie.image }}" alt="Card image cap">
+	</div>
+{% endblock image %}
+
 {% block Search%}
 {% endblock Search%}
 

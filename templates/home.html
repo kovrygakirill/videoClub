@@ -80,9 +80,11 @@
         {% for movie in movies %}
         <div class="card mb-4">
           <div style="display: flex; flex-direction: row;">
-		  	<div>
+		  	{% block image %}
+			<div>
 				<img  id="image" src="media/{{ movie.image }}" alt="Card image cap">
 			</div>
+			{% endblock image %}
             <div class="card-body">
               <h2 class="card-title">{{movie.movie_name}}</h2>
               <p id="plot_home" class="plot">{{movie.plot}}</p>

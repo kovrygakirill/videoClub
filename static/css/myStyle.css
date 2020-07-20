@@ -133,7 +133,7 @@ body {
     .navbar{
         /*width: 320px;*/
         min-width: 320px;
-        max-width: 414px;
+        max-width: 576px;
     }
     .card-title{
         width: 100%;
