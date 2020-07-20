@@ -11,7 +11,9 @@
         <!-- Blog Post -->
         <div class="card mb-4">
           <div style="display: flex; flex-direction: row;">
-            <img  id="image" src="/media/{{ movie.image }}" alt="Card image cap">
+			<div>
+				<img  id="image" src="/media/{{ movie.image }}" alt="Card image cap">
+			</div>
             <div class="card-body">
                 <h2 class="card-title">{{movie.movie_name}}</h2>
                 <p id="plot_movie" >{{movie.plot}}</p>
