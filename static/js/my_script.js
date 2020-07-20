@@ -31,7 +31,7 @@ $(document).ready(function () {
        document.getElementById('post').disabled = !content;
     });
 
-    $(".like").on("click touchstart",function (event) {
+    $(".like").on("click tap touchstart",function (event) {
         var id_movie = $(this).attr('name');
         var username = $(".warn_like_dis").attr("name");
 
@@ -59,7 +59,7 @@ $(document).ready(function () {
         });
     });
 
-    $(".dislike").on("click touchstart", function (event) {
+    $(".dislike").on("click tap touchstart", function (event) {
         var id_movie = $(this).attr('name');
         var username = $(".warn_like_dis").attr("name");
 
