@@ -1,4 +1,44 @@
 from django.contrib.auth.models import User
+from ..models import UserProfile
+from django.shortcuts import render, redirect
+from django.contrib import auth
+from .email import send_email
+
+
+def registration_user(request, username, email, password1, password2):
+    args = {}
+    user = auth.authenticate(username=username, password=password1)
+
+    if user is not None:
+        args["register_error"] = "User already exist with this username"
+    else:
+        error_register = check_fields({"username": username, "email": email,
+                                       "password1": password1, "password2": password2})
+        if not error_register:
+            user_profile = create_not_active_user({"username": username, "email": email,
+                                                   "password": password1})
+
+            send_email(email, user_profile.user.id)
+
+            return render(request, 'success_register.html')
+        else:
+            args["register_error"] = error_register
+
+    return render(request, "register.html", args)
+
+
+def create_not_active_user(kwargs):
+    user = User.objects.create_user(
+        username=kwargs['username'],
+        password=kwargs['password'],
+        email=kwargs['email']
+    )
+    user.save()
+
+    user_profile = UserProfile.object.create(user=user)
+    user_profile.save()
+
+    return user_profile
 
 
 def check_fields(kwargs):
