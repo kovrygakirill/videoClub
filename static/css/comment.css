@@ -3,8 +3,8 @@
 }
 
 .comment-wrapper .panel-body {
-    max-height:650px;
-    overflow:auto;
+    min-height:300px;
+    overflow:hidden;
 }
 
 .comment-wrapper .media-list .media {
