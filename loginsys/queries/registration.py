@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from ..models import UserProfile
 from django.shortcuts import render, redirect
 from django.contrib import auth
-from .email import send_email
+from .email import send_email_for_register
 
 
 def registration_user(request, username, email, password1, password2):
@@ -12,13 +12,11 @@ def registration_user(request, username, email, password1, password2):
     if user is not None:
         args["register_error"] = "User already exist with this username"
     else:
-        error_register = check_fields({"username": username, "email": email,
-                                       "password1": password1, "password2": password2})
+        error_register = check_fields(username, email, password1, password2)
         if not error_register:
-            user_profile = create_not_active_user({"username": username, "email": email,
-                                                   "password": password1})
+            user_profile = create_not_active_user(username, email, password1)
 
-            send_email(email, user_profile.user.id)
+            send_email_for_register(email, user_profile.user.id)
 
             return render(request, 'success_register.html')
         else:
@@ -27,11 +25,11 @@ def registration_user(request, username, email, password1, password2):
     return render(request, "register.html", args)
 
 
-def create_not_active_user(kwargs):
+def create_not_active_user(username, email, password):
     user = User.objects.create_user(
-        username=kwargs['username'],
-        password=kwargs['password'],
-        email=kwargs['email']
+        username=username,
+        password=password,
+        email=email
     )
     user.save()
 
@@ -41,13 +39,20 @@ def create_not_active_user(kwargs):
     return user_profile
 
 
-def check_fields(kwargs):
-    checks = [check_fill_in_fields, check_exist_username,
-              check_exist_email, check_repeat_password]
+def check_fields(username, email, password1, password2):
+    checks_func = [check_fill_in_fields,
+                   check_exist_username,
+                   check_exist_email,
+                   check_repeat_password
+                   ]
+    checks_param = [[username, email, password1, password2],
+                    [username],
+                    [email],
+                    [password1, password2]]
     result = ""
 
-    for check in checks:
-        result = check(kwargs)
+    for fun, param in zip(checks_func, checks_param):
+        result = fun(*param)
 
         if result:
             break
@@ -55,10 +60,10 @@ def check_fields(kwargs):
     return result
 
 
-def check_fill_in_fields(kwargs):
+def check_fill_in_fields(*fields):
     result = ""
 
-    for i in kwargs.values():
+    for i in fields:
         if not i:
             result = "Please, fill in all the fields"
             break
@@ -66,11 +71,11 @@ def check_fill_in_fields(kwargs):
     return result
 
 
-def check_exist_username(kwargs):
+def check_exist_username(username):
     result = ""
 
     try:
-        User.objects.get(username=kwargs['username'])
+        User.objects.get(username=username)
         result = 'This username already exist'
     except User.DoesNotExist:
         pass
@@ -78,11 +83,11 @@ def check_exist_username(kwargs):
     return result
 
 
-def check_exist_email(kwargs):
+def check_exist_email(email):
     result = ""
 
     try:
-        User.objects.get(email=kwargs['email'])
+        User.objects.get(email=email)
         result = 'This email already exist'
     except User.DoesNotExist:
         pass
@@ -90,10 +95,10 @@ def check_exist_email(kwargs):
     return result
 
 
-def check_repeat_password(kwargs):
+def check_repeat_password(password1, password2):
     result = ""
 
-    if kwargs['password1'] != kwargs['password2']:
+    if password1 != password2:
         result = "New password not equal repeat password"
 
     return result

@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
-from .queries.token import active_user
+from .queries.token import active_user, check_token_exist_for_refresh_password
 from .queries.authenticate import authorization_user
 from .queries.registration import registration_user
+from.queries.forgot_password import confirm_email, create_new_password
 
 
 def login(request):
@@ -42,5 +43,28 @@ def confirm_token(request):
         response = active_user(request, token)
     else:
         response = render(request, "register.html")
+
+    return response
+
+
+def forgot_password(request):
+    if request.POST:
+        email = request.POST.get("email", "")
+        response = confirm_email(request, email)
+    else:
+        response = render(request, "forgot_password.html")
+
+    return response
+
+
+def refresh_password(request):
+    if request.POST:
+        password1 = request.POST.get("password1", "")
+        password2 = request.POST.get("password2", "")
+        token = request.GET.get("token", "")
+        response = create_new_password(request, password1, password2, token)
+    else:
+        token = request.GET.get("token", "")
+        response = check_token_exist_for_refresh_password(request, token)
 
     return response

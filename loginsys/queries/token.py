@@ -14,6 +14,18 @@ def get_token(id_user):
     return key
 
 
+def check_token_exist_for_refresh_password(request, key):
+    args = {}
+    try:
+        token = TokenEmail.object.get(key=key)
+        args["token"] = token
+        response = render(request, "refresh_password.html", args)
+    except TokenEmail.DoesNotExist:
+        response = render(request, "404.html")
+
+    return response
+
+
 def active_user(request, key):
     try:
         token = TokenEmail.object.get(key=key)
@@ -23,10 +35,10 @@ def active_user(request, key):
         user_profile.is_confirm = True
         user_profile.save()
 
-        response = render(request, "login.html")
+        response = redirect("/auth/login/")
     except TokenEmail.DoesNotExist:
-        pass
+        response = render(request, "404.html")
     except User.DoesNotExist:
-        pass
+        response = render(request, "404.html")
 
     return response

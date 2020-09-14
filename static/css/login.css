@@ -18,6 +18,10 @@ a {
   font-weight: 400;
 }
 
+.forgot_password{
+  padding-left: 40px;
+}
+
 .login{
   display: flex;
   align-items: center;
