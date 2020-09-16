@@ -18,11 +18,20 @@ def registration_user(request, username, email, password1, password2):
 
             send_email_for_register(email, user_profile.user.id)
 
-            return render(request, 'success_register.html')
+            responce = render(request, 'success_register.html')
+            responce.delete_cookie("email")
+            responce.delete_cookie("username")
+
+            return responce
         else:
             args["register_error"] = error_register
 
-    return render(request, "register.html", args)
+    args["username"] = username
+    args["email"] = email
+    response = render(request, "register.html", args)
+    response.set_cookie('email', email)
+    response.set_cookie('username', username)
+    return response
 
 
 def create_not_active_user(username, email, password):
