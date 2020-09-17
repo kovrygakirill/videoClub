@@ -18,4 +18,4 @@ def send_email_for_refresh_password(toEmail, id_user):
               f"forgot_password/refresh_password/?token={token}"
     fromEmail = 'videoclubapp@gmail.com'
 
-    send_mail(header, message, fromEmail, [toEmail], fail_silently=False, )
+    send_mail(header, message, fromEmail, [toEmail], fail_silently=True, )
