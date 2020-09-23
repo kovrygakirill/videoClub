@@ -18,12 +18,14 @@ from django.http import JsonResponse
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
+from business_logic.my_base_exception import base_view
+
 
 
 # import pdb; pdb.set_trace()
 # import pdb; pdb.set_trace()
 
-
+@base_view
 def post_Home(request):
     # templates = 'home.html'
     #
@@ -58,7 +60,7 @@ def post_Home(request):
     else:
         return render(request, 'request_not_found.html')
 
-
+@base_view
 def detail_movies(request, pk):
     # movie = get_object_or_404(Movie, pk=pk)
     # return render(request, 'movie.html', {'movie': movie}x`x)
@@ -81,7 +83,7 @@ def detail_movies(request, pk):
     #
     # # return render(request, 'movie.html', {'movie': movie})
 
-
+@base_view
 def detail_category(request, slug):
     # category = Category.object.get(slug=slug)
     #
@@ -107,7 +109,7 @@ def detail_category(request, slug):
     else:
         return render(request, 'request_not_found.html')
 
-
+@base_view
 def random_movie(request):
     movie = Movie.object.order_by("?").first()
     path = "/movies/" + str(movie.pk) + "/"
@@ -117,7 +119,7 @@ def random_movie(request):
     # return response
     return redirect(path)
 
-
+@base_view
 def addLike(request):
     if request.POST:
         pk = request.POST.get("pk", None)
@@ -148,7 +150,7 @@ def addLike(request):
 
     return redirect("/")
 
-
+@base_view
 def addDislike(request):
     if request.POST:
         pk = request.POST.get("pk", None)
@@ -198,7 +200,7 @@ def addDislike(request):
 #         return render(request, 'request_not_found.html')
 #     return redirect("/")
 
-
+@base_view
 def error_404(request):
     return render(request, '404.html')
 

@@ -3,9 +3,11 @@ from django.contrib import auth
 from .queries.token import active_user, check_token_exist_for_refresh_password
 from .queries.authenticate import authorization_user
 from .queries.registration import registration_user
-from.queries.forgot_password import confirm_email, create_new_password
+from .queries.forgot_password import confirm_email, create_new_password
+from business_logic.my_base_exception import base_view
 
 
+@base_view
 def login(request):
     if request.POST:
         username = request.POST.get("username", "")
@@ -18,11 +20,13 @@ def login(request):
     return response
 
 
+@base_view
 def logout(request):
     auth.logout(request)
     return redirect("/")
 
 
+@base_view
 def register(request):
     if request.POST:
         username = request.POST.get("username", "")
@@ -37,6 +41,7 @@ def register(request):
         return render(request, "register.html")
 
 
+@base_view
 def confirm_token(request):
     if request.GET:
         token = request.GET.get("token", "")
@@ -47,6 +52,7 @@ def confirm_token(request):
     return response
 
 
+@base_view
 def forgot_password(request):
     if request.POST:
         email = request.POST.get("email", "")
@@ -57,6 +63,7 @@ def forgot_password(request):
     return response
 
 
+@base_view
 def refresh_password(request):
     if request.POST:
         password1 = request.POST.get("password1", "")
