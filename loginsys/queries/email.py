@@ -8,7 +8,7 @@ def send_email_for_register(toEmail, id_user):
     token = get_token(id_user)
     message = f"To complete registration, follow the link: {os.environ.get('DOMAIN_NAME')}/auth/confirm_token/?" \
               f"token={token}"
-    fromEmail = 'app174451074@heroku.com'
+    fromEmail = 'videoclubapp@gmail.com'
 
     send_mail(header, message, fromEmail, [toEmail], fail_silently=False, )
 
@@ -18,6 +18,6 @@ def send_email_for_refresh_password(toEmail, id_user):
     token = get_token(id_user)
     message = f"To refresh password, follow the link: {os.environ.get('DOMAIN_NAME')}/auth/" \
               f"forgot_password/refresh_password/?token={token}"
-    fromEmail = 'app174451074@heroku.com'
+    fromEmail = 'videoclubapp@gmail.com'
 
     send_mail(header, message, fromEmail, [toEmail], fail_silently=False, )
