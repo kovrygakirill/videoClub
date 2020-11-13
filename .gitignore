@@ -226,4 +226,7 @@ $RECYCLE.BIN/
 docker-compose.yml
 Dockerfile
 
+# Logging
+mysite.log
+
 # End of https://www.gitignore.io/api/python,pycharm,windows
