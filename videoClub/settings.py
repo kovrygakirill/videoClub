@@ -23,7 +23,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '*=py&_sg)7z=ixoly9=-5ddhb&c*@*
 # SECRET_KEY = '*=py&_sg)7z=ixoly9=-5ddhb&c*@*0*+%&ehu^f*6i=p&f^37'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = eval(os.environ.get('DJANGO_DEBUG', True))
+DEBUG = eval(os.environ.get('DJANGO_DEBUG', 'True'))
 # DEBUG = True
 
 ALLOWED_HOSTS = ["videoclubapp.herokuapp.com", "127.0.0.1"]
