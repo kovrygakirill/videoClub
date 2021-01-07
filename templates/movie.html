@@ -20,7 +20,10 @@
                 <h2 class="card-title">{{movie.movie_name}}</h2>
                 <p id="plot_movie" >{{movie.plot}}</p>
                 <p class="card-text">Жанр:  <a href="{% url 'detail_category' slug=movie.category.slug %}">{{movie.category}}</a></p>
-                <p class="card-text">Ссылка: <a href="{{movie.link_movie}}">{{movie.link_movie}}</a></p>
+				<video class="link_video" controls="controls" poster="{% static "image/108980-688xW.jpg" %}" muted="muted">
+				   <source src="{{movie.link_movie}}" type="video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;">
+				</video>
+{#                <p class="card-text">Ссылка: <a href="{{movie.link_movie}}">{{movie.link_movie}}</a></p>#}
 				<a type="submit">
 				  <img name="{{ movie.pk }}" class="like" src="{% static "image/like.jpg"%}"
 									width='25px' height='25px' title="Понравилоя">

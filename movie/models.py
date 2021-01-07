@@ -20,7 +20,7 @@ class Movie(models.Model):
     image = models.ImageField(null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     plot = models.TextField(null=True)
-    link_movie = models.CharField(max_length=100)
+    link_movie = models.CharField(max_length=200)
     like = models.PositiveIntegerField(default=0, editable=False)
     dislike = models.PositiveIntegerField(default=0, editable=False)
     created_date = models.DateTimeField(auto_now_add=True, null=True)
