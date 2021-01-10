@@ -1,1 +1,1 @@
-web: gunicorn videoClub.wsgi --log-file -
+web: python manage.py collectstatic --no-input; gunicorn videoClub.wsgi --log-file -
