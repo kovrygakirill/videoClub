@@ -24,6 +24,9 @@
 					<label>{{ login_error }}</label><br>
 				{% endif %}
 				<input type="submit" value="Log in">
+				<button class="btn btn-primary mb-2">
+        			<a href="{% url 'kyky' %}">Login with Vk</a>
+    			</button>
 			</form>
 		{% endblock auth %}
 		{% block reg %}

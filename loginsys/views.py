@@ -8,6 +8,10 @@ from business_logic.my_base_exception import base_view
 
 
 @base_view
+def kyky(request):
+    return redirect("/social/login/vk-oauth2/")
+
+@base_view
 def login(request):
     if request.POST:
         username = request.POST.get("username", "")

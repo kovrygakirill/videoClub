@@ -23,8 +23,8 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '*=py&_sg)7z=ixoly9=-5ddhb&c*@*
 # SECRET_KEY = '*=py&_sg)7z=ixoly9=-5ddhb&c*@*0*+%&ehu^f*6i=p&f^37'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = eval(os.environ.get('DJANGO_DEBUG', 'True'))
-# DEBUG = True
+# DEBUG = eval(os.environ.get('DJANGO_DEBUG', 'True'))
+DEBUG = True
 
 ALLOWED_HOSTS = ["videoclubapp.herokuapp.com", "127.0.0.1"]
 # ALLOWED_HOSTS = ['127.0.0.1']
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'movie.apps.MovieConfig',
     'loginsys.apps.LoginsysConfig',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.vk.VKOAuth2',          # бекенд авторизации через ВКонтакте
+    'django.contrib.auth.backends.ModelBackend', # бекенд классической аутентификации, чтобы работала
+                                                 # авторизация через обычный логин и пароль
+)
 
 ROOT_URLCONF = 'videoClub.urls'
 
@@ -66,6 +73,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
             ],
         },
     },
@@ -75,6 +83,12 @@ WSGI_APPLICATION = 'videoClub.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
+
+SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+SOCIAL_AUTH_VK_OAUTH2_KEY = '7810050'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'Olx9K6ikTUp1IJDGKiwC'
+LOGIN_REDIRECT_URL = '/'
+SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
 
 DATABASES = {
     'default': {
