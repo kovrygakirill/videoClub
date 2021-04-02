@@ -5,6 +5,21 @@ from django.contrib import auth
 from .email import send_email_for_register
 
 
+def registration_social_network(request, email, username):
+    args = {}
+    error_register = check_exist_email(email)
+
+    if not error_register:
+        user_profile = create_not_active_user_profile(username, email)
+        send_email_for_register(email, user_profile.user.id)
+        response = render(request, 'success_register.html', args)
+    else:
+        args["register_error"] = error_register
+        response = render(request, "register_social_network.html", args)
+
+    return response
+
+
 def registration_user(request, username, email, password1, password2):
     args = {}
     user = auth.authenticate(username=username, password=password1)
@@ -40,6 +55,17 @@ def create_not_active_user(username, email, password):
         password=password,
         email=email
     )
+    user.save()
+
+    user_profile = UserProfile.object.create(user=user)
+    user_profile.save()
+
+    return user_profile
+
+
+def create_not_active_user_profile(username, email):
+    user = User.objects.get(username=username)
+    user.email = email
     user.save()
 
     user_profile = UserProfile.object.create(user=user)

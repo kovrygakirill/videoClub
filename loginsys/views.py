@@ -2,14 +2,37 @@ from django.shortcuts import render, redirect
 from django.contrib import auth
 from .queries.token import active_user, check_token_exist_for_refresh_password
 from .queries.authenticate import authorization_user
-from .queries.registration import registration_user
+from .queries.registration import registration_user, registration_social_network
 from .queries.forgot_password import confirm_email, create_new_password
 from business_logic.my_base_exception import base_view
+from .queries.authenticate import get_user_profile_by_name, authorization_social_network
 
 
 @base_view
-def kyky(request):
-    return redirect("/social/login/vk-oauth2/")
+def login_thought_social_network(request):
+    user = request.user
+    user_profile = get_user_profile_by_name(user)
+
+    if user_profile:
+        response = authorization_social_network(request, user_profile)
+    else:
+        response = render(request, "register_social_network.html", {'user': user})
+
+    return response
+
+
+@base_view
+def register_thought_social_network(request):
+    if request.POST:
+        username = request.POST.get("username", "")
+        email = request.POST.get("email", "")
+
+        response = registration_social_network(request, email, username)
+
+        return response
+    else:
+        return render(request, "register_social_network.html")
+
 
 @base_view
 def login(request):

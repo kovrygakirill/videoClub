@@ -1,0 +1,16 @@
+{% extends "login.html" %}
+{% load static %}
+
+{% block auth %}
+	<form action="/auth/register/social_network/" method="post">
+		<input type="text" name="username" id="username" placeholder="Name" value="{{ user.username }}" readonly><br>
+		<input type="email" name="email" id="email" placeholder="Email"><br>
+		{% if register_error %}
+			<label>{{ register_error }}</label><br>
+		{% endif %}
+		<input type="submit" value="Registration">
+	</form>
+{% endblock auth %}
+
+{% block reg %}
+{% endblock reg %}
